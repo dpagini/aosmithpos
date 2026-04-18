@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Lowe's Installation Nightmare | A Consumer's Story</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-dark: #0C447C;
+    --blue-mid: #185FA5;
+    --blue-light: #E6F1FB;
+    --blue-border: #B5D4F4;
+    --gray-text: #444441;
+    --gray-muted: #5F5E5A;
+    --gray-light: #F1EFE8;
+    --gray-border: #D3D1C7;
+    --red-bg: #FCEBEB;
+    --red-border: #F7C1C1;
+    --red-text: #791F1F;
+    --amber-bg: #FAEEDA;
+    --amber-border: #FAC775;
+    --amber-text: #633806;
+    --white: #ffffff;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--gray-text);
+    background: #f8f7f4;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--blue-dark);
+    color: #fff;
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+  }
+  header .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #85B7EB;
+    margin-bottom: 0.75rem;
+  }
+  header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 1rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  header p {
+    font-size: 1rem;
+    color: #B5D4F4;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  /* SUMMARY STATS */
+  .stats-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-border);
+    padding: 1.5rem;
+  }
+  .stats-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+  .stat {
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+  }
+  .stat-value {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--blue-mid);
+    display: block;
+    line-height: 1.1;
+    margin-bottom: 0.25rem;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--gray-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  /* MAIN CONTENT */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  /* ALERT BOX */
+  .alert {
+    background: var(--red-bg);
+    border: 1px solid var(--red-border);
+    border-left: 4px solid #E24B4A;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 2.5rem;
+    color: var(--red-text);
+    font-size: 0.925rem;
+  }
+  .alert strong { color: #A32D2D; }
+
+  /* SECTION HEADINGS */
+  .section-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue-mid);
+    background: var(--blue-light);
+    border: 1px solid var(--blue-border);
+    border-radius: 4px;
+    padding: 3px 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--gray-border);
+  }
+
+  .timeline-entry {
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+  .timeline-entry::before {
+    content: '';
+    position: absolute;
+    left: -2.4rem;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--blue-mid);
+    border: 2px solid var(--white);
+    box-shadow: 0 0 0 2px var(--blue-mid);
+  }
+  .timeline-entry.critical::before {
+    background: #E24B4A;
+    box-shadow: 0 0 0 2px #E24B4A;
+  }
+
+  .timeline-month {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue-mid);
+    margin-bottom: 0.25rem;
+  }
+  .timeline-entry.critical .timeline-month { color: #A32D2D; }
+
+  .timeline-card {
+    background: var(--white);
+    border: 1px solid var(--gray-border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+  }
+  .timeline-entry.critical .timeline-card {
+    border-color: var(--red-border);
+    background: #fffafa;
+  }
+
+  .timeline-card h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--blue-dark);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  .timeline-entry.critical .timeline-card h2 { color: var(--red-text); }
+
+  .timeline-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .timeline-card ul li {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--gray-muted);
+    padding: 0.35rem 0 0.35rem 1.1rem;
+    border-bottom: 1px solid var(--gray-light);
+    position: relative;
+  }
+  .timeline-card ul li:last-child { border-bottom: none; }
+  .timeline-card ul li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--gray-border);
+  }
+  .timeline-card ul li strong {
+    color: var(--gray-text);
+    font-weight: 600;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--gray-border);
+    margin: 2.5rem 0;
+  }
+
+  /* CONCERNS GRID */
+  .concerns-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .concern-card {
+    background: var(--white);
+    border: 1px solid var(--gray-border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+  .concern-card .icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    font-size: 15px;
+  }
+  .concern-card h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-text);
+    margin-bottom: 0.4rem;
+  }
+  .concern-card p {
+    font-size: 0.825rem;
+    color: var(--gray-muted);
+    line-height: 1.5;
+  }
+
+  /* WHAT I WANT */
+  .resolution-box {
+    background: var(--blue-light);
+    border: 1px solid var(--blue-border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+  .resolution-box h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--blue-dark);
+    margin-bottom: 0.75rem;
+  }
+  .resolution-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  .resolution-box ul li {
+    font-size: 0.9rem;
+    color: var(--blue-mid);
+    padding: 0.3rem 0 0.3rem 1.25rem;
+    position: relative;
+  }
+  .resolution-box ul li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+    color: var(--blue-mid);
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-size: 0.8rem;
+    color: var(--gray-muted);
+    border-top: 1px solid var(--gray-border);
+    background: var(--white);
+  }
+
+  @media (max-width: 600px) {
+    .timeline { padding-left: 1.5rem; }
+    .timeline-entry::before { left: -1.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Consumer Complaint &mdash; New Britain, CT</p>
+  <h1>A $4,424 Water Heater Install That Has Failed Twice in Under 18 Months</h1>
+  <p>A documented account of a substandard Lowe&#8217;s installation, two unit failures, and an unresolved warranty dispute with A.O. Smith.</p>
+</header>
+
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat">
+      <span class="stat-value">$4,424</span>
+      <span class="stat-label">Total paid to Lowe&#8217;s</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">2x</span>
+      <span class="stat-label">Unit failures in &lt;18 months</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">6+</span>
+      <span class="stat-label">Unanswered calls to Lowe&#8217;s</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">$0</span>
+      <span class="stat-label">Resolution offered so far</span>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <div class="alert">
+    <strong>Current status (as of April 15, 2025):</strong> The unit is not functioning. A.O. Smith will cover parts under warranty but not labor. Lowe&#8217;s Customer Solutions has not offered a meaningful resolution. A supervisor callback requested from A.O. Smith has not been received.
+  </div>
+
+  <div class="section-label">Full Timeline</div>
+
+  <div class="timeline">
+
+    <!-- JANUARY 2024 -->
+    <div class="timeline-entry">
+      <div class="timeline-month">January 2024</div>
+      <div class="timeline-card">
+        <h2>Initial Purchase &amp; Installation</h2>
+        <ul>
+          <li><strong>Quoted price:</strong> Approximately $3,600 for the A.O. Smith heat pump water heater and installation.</li>
+          <li><strong>Final invoice:</strong> $4,424 &mdash; $800+ over the original estimate. No explanation provided for the increase.</li>
+          <li><strong>Labor:</strong> Billed at approximately $1,800. Two plumbers on-site for roughly 2 hours = approximately $400/hour per plumber. Rate not disclosed upfront.</li>
+          <li><strong>Condensate pump:</strong> Billed at approximately $400 markup over its $60 retail price. It was unboxed, set on the floor, and plugged into a standard outlet using an extension cord I provided. Never secured or hardwired. This is not a professional installation.</li>
+          <li><strong>Leak detector not installed:</strong> The leak detector shutoff unit I purchased was not brought to the job. I had to make repeated calls to have a crew return and complete this.</li>
+          <li><strong>Vendor chain:</strong> The install involved navigating: Lowe&#8217;s &rarr; Lowe&#8217;s Home Improvement &rarr; 1-800-Heaters &rarr; local plumber. I was forced to call every party in this chain. Accountability was non-existent.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- NOVEMBER 2024 -->
+    <div class="timeline-entry critical">
+      <div class="timeline-month">November 2024 &mdash; First Failure</div>
+      <div class="timeline-card">
+        <h2>Unit Fails for the First Time</h2>
+        <ul>
+          <li>Unit begins showing signs of failure. No error codes displayed.</li>
+          <li>Hot water supply severely limited &mdash; unable to complete half a shower. Could not fill a bathtub for my daughter.</li>
+          <li>Symptoms persisted for 2&ndash;3 weeks before I contacted Lowe&#8217;s.</li>
+          <li><strong>Unit was ultimately replaced.</strong> However, I was never told what failed, what caused it, or who bore the cost of the replacement. No root cause was ever communicated.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MARCH 2025 -->
+    <div class="timeline-entry">
+      <div class="timeline-month">March 2025</div>
+      <div class="timeline-card">
+        <h2>Furnace Technician Discovers Installation Defects</h2>
+        <ul>
+          <li><strong>Third-party finding:</strong> During a routine furnace service, the technician identified serious problems with the original water heater installation.</li>
+          <li><strong>Condensate pipe error:</strong> The condensate pump was plumbed to drain into the A/C condensate line, which exits the home. In freezing temperatures (e.g., 10&deg;F), this exterior line freezes &mdash; leaving the water with nowhere to go. This likely explains water pooling found on the floor near the unit in previous months.</li>
+          <li><strong>Unsecured hose:</strong> The drain hose from the water heater into the condensate pump was simply placed into the pump opening &mdash; never fastened or secured.</li>
+          <li><strong>Late March:</strong> The same symptoms as November 2024 begin reappearing. Hot water is again insufficient.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- APRIL 2025 -->
+    <div class="timeline-entry critical">
+      <div class="timeline-month">April 2025 &mdash; Second Failure &amp; Escalation</div>
+      <div class="timeline-card">
+        <h2>Second Failure, Six Unanswered Calls, and a Questionable &#8220;Resolution&#8221;</h2>
+        <ul>
+          <li><strong>Sunday, April 13:</strong> First contact with Lowe&#8217;s. Spent ~1 hour on the phone. Representative unable to locate my order. Told to call the &#8220;hot water heater department&#8221; on Sunday.</li>
+          <li><strong>Monday, April 14:</strong> Called hot water heater dept &rarr; redirected to Customer Solutions. Left a message. Called back 3 more times throughout the day. No response.</li>
+          <li><strong>Tuesday, April 14 (evening) &rarr; Wednesday, April 15 (morning):</strong> Called 3 more times on Tuesday. Finally received a callback on April 15 from a representative named &#8220;Freddy.&#8221;</li>
+          <li><strong>Freddy&#8217;s employer unknown:</strong> When asked directly who he works for, Freddy stated he &#8220;partners with Lowe&#8217;s&#8221; but could not or would not identify his company. This is unacceptable for a consumer dispute representative.</li>
+          <li><strong>Wrong warranty date given:</strong> Freddy initially stated the warranty expired January 2025. Only after I corrected him &mdash; noting the replacement unit was installed in November 2024 &mdash; did he acknowledge the warranty ran through November 2025. His original date would have been used to deny my claim.</li>
+          <li><strong>Offer made:</strong> Freddy offered approximately 5% of the purchase price (~$200 credit). Labor for a heat pump water heater diagnosis and repair typically costs $200&ndash;$500+. This offer does not even cover the service call.</li>
+          <li><strong>A.O. Smith contacted:</strong> Confirmed warranty coverage for parts and tank only &mdash; not labor. Requested a supervisor callback. As of April 15, 2025, that callback has not been received.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- /timeline -->
+
+  <hr class="divider">
+
+  <div class="section-label">Key Concerns</div>
+  <div class="concerns-grid">
+    <div class="concern-card">
+      <div class="icon">&#128295;</div>
+      <h3>Substandard installation</h3>
+      <p>Confirmed defects including improper condensate piping and unsecured connections, found 14 months after install by a third party.</p>
+    </div>
+    <div class="concern-card">
+      <div class="icon">&#128683;</div>
+      <h3>No root cause provided</h3>
+      <p>The November 2024 failure resulted in a replacement unit, but no explanation of the failure was ever provided to me.</p>
+    </div>
+    <div class="concern-card">
+      <div class="icon">&#128222;</div>
+      <h3>Unresponsive customer support</h3>
+      <p>Six calls over two days before receiving any response. The rep who called back could not identify his employer.</p>
+    </div>
+    <div class="concern-card">
+      <div class="icon">&#128181;</div>
+      <h3>Inadequate resolution offered</h3>
+      <p>A ~$200 credit on a $4,424 purchase that has failed twice is not a reasonable response to this situation.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">What I Am Seeking</div>
+  <div class="resolution-box">
+    <h3>Reasonable resolution from Lowe&#8217;s</h3>
+    <ul>
+      <li>Coverage of labor costs for the current repair, given the ongoing failures</li>
+      <li>Acknowledgment of the installation defects identified by a third party</li>
+      <li>A clear explanation of what caused both failures</li>
+      <li>Direct contact with an actual Lowe&#8217;s employee &mdash; not a third-party contractor</li>
+    </ul>
+  </div>
+
+</main>
+
+<footer>
+  Document prepared April 15, 2025 &nbsp;&bull;&nbsp; All facts documented firsthand &nbsp;&bull;&nbsp; New Britain, CT
+</footer>
+
+</body>
+</html>
