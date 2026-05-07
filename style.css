@@ -229,6 +229,16 @@ main {
 .timeline-card ul li::before { content: '–'; position: absolute; left: 0; color: var(--gray-border); }
 .timeline-card ul li strong { color: var(--gray-text); font-weight: 600; }
 
+/* Inline reference links within timeline */
+.inline-ref {
+  font-size: 0.8rem;
+  color: var(--blue-mid);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+.inline-ref:hover { color: var(--blue-dark); }
+
 .divider { border: none; border-top: 1px solid var(--gray-border); margin: 2.5rem 0; }
 
 /* PHOTO SECTION */
@@ -282,6 +292,55 @@ main {
 }
 .concern-card h3 { font-size: 0.875rem; font-weight: 600; color: var(--gray-text); margin-bottom: 0.4rem; }
 .concern-card p { font-size: 0.825rem; color: var(--gray-muted); line-height: 1.5; }
+
+/* REFERENCES SECTION */
+.references-intro {
+  font-size: 0.875rem;
+  color: var(--gray-muted);
+  line-height: 1.65;
+  margin-bottom: 1.25rem;
+}
+
+.ref-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.ref-card {
+  display: block;
+  background: var(--white);
+  border: 1px solid var(--gray-border);
+  border-left: 3px solid var(--blue-mid);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.ref-card:hover {
+  border-left-color: var(--blue-dark);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.ref-source {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--blue-mid);
+  margin-bottom: 0.2rem;
+}
+.ref-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray-text);
+  margin-bottom: 0.35rem;
+}
+.ref-desc {
+  font-size: 0.825rem;
+  color: var(--gray-muted);
+  line-height: 1.55;
+}
 
 .resolution-box {
   background: var(--blue-light);
