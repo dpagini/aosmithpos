@@ -378,3 +378,45 @@ footer .footer-disclaimer {
   .timeline-entry::before { left: -1.9rem; }
   .photo-grid { grid-template-columns: 1fr 1fr; }
 }
+
+.contact-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.contact-col {
+  background: var(--white);
+  border: 1px solid var(--gray-border);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+}
+.contact-col h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--gray-text);
+  margin-bottom: 0.5rem;
+}
+.contact-col p {
+  font-size: 0.825rem;
+  color: var(--gray-muted);
+  line-height: 1.55;
+  margin-bottom: 0.75rem;
+}
+.contact-link {
+  display: inline-block;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--blue-mid);
+  text-decoration: none;
+  border-bottom: 1px solid var(--blue-border);
+  padding-bottom: 1px;
+}
+.contact-link:hover {
+  color: var(--blue-dark);
+  border-bottom-color: var(--blue-dark);
+}
+
+@media (max-width: 600px) {
+  .contact-box { grid-template-columns: 1fr; }
+}
